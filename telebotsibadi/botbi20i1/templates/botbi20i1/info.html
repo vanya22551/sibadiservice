@@ -1,0 +1,27 @@
+{% extends 'botbi20i1/base.html' %}
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}info{% endblock %}
+</head>
+<body>
+
+    
+
+    {% block content %}
+<a href="{{url}}">828476-witcher-3-wild-hunt-fantasy-action-fighting-warrior-dark.jpg</a>
+    <a href="/media/GroupProject.py">GroupProject.py</a>
+         {% for file in files %}
+          <h1>
+              {{file.file}}<br>
+              {{file.student}}<br>
+              {{file.lab}}
+          </h1>
+         {% endfor %}
+
+    {% endblock %}
+
+</body>
+</html>

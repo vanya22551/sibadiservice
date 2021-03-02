@@ -1,0 +1,27 @@
+{% extends 'botbi20i1/base.html' %}
+
+
+
+{% block title %}
+    Изменение файла
+{% endblock %}
+
+<body>
+    {% block content %}
+        <div class='addfile' align="center">
+            <h1 float="center" >
+                Добавить решение
+            </h1>
+            <form class="add_file" enctype="multipart/form-data" method="post" >
+                {% csrf_token %}
+                <p class="add_file">
+                    Решение в виде файла
+                </p>
+                <p class="file">
+                    {{ form.file }}
+                </p>
+                <input type="submit" value="Сохранить">
+            </form>
+        </div>
+    {% endblock %}
+</body>

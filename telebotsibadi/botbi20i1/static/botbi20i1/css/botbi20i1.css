@@ -1,0 +1,454 @@
+body {
+    background: #d5e1f2;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+main {
+    min-width: 100%;
+    
+    max-width: 100%;
+    
+}
+
+main h1.title {
+    text-align: center;
+}
+
+main TABLE.group{
+    min-width: 100%; /* Ширина таблицы */
+    max-width: 100%;
+    float: center;
+    border-collapse: collapse;
+
+   }
+
+a.student {
+    font-family:times;
+    color:black;
+    font-size:15px
+}
+main TABLE.facepage{
+    min-width: 50%;
+    max-width: 50%;
+    float: center;
+    width: auto; /* Ширина таблицы */
+    border-collapse: collapse;
+    margin: auto;
+   }
+
+   TD, TH {
+
+    padding: 3px; /* Поля вокруг содержимого таблицы */
+    border: 1px solid black; /* Параметры рамки */
+    text-align: center; /* Выравнивание по левому краю */
+   }
+
+    TH a{ color: #80ad80;}
+   a {text-decoration: none;}
+
+
+
+main TABLE.studentPage {
+    min-width: 50%;
+    max-width: 50%;
+    
+    height: auto;
+
+	margin:auto;
+    border-collapse: collapse;
+}
+
+TD.file a {
+    color: #273027;
+}
+
+div.block1{
+
+    width: 50%;
+
+    height: 100%;
+    background: #d5e1f2;
+    padding: 5px;
+
+    border: solid 1px black;
+    float: left;
+
+}
+
+div.block2{
+
+    width: 50%;
+
+    height: 100%;
+    background: #d5e1f2;
+    padding: 5px;
+
+    border: solid 1px black;
+    float: right;
+
+}
+
+div.block2_student{
+
+    width: 50%;
+
+    height: 100%;
+    background: #d5e1f2;
+    padding: 5px;
+
+    border: solid 1px black;
+    float: right;
+
+}
+
+div.personal_data {
+    width: 100%;
+    height: 100%;
+}
+
+h2.data {
+    text-align: center;
+    border: solid 2px black;
+
+}
+
+
+div.teacher {
+    float: left;
+    
+    width: auto;
+    height: auto;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 25;
+}
+
+div.teacher_name {
+    float: left;
+    padding-left: 20px;
+    width: auto;
+    height: auto;
+
+    font-size: 25;
+}
+
+div.labpage {
+    width: 100%;
+    float: right;
+}
+
+div.addfile {
+    width: 100%;
+    float: right;
+}
+
+div.teacher_email {
+    float: left;
+    width: auto;
+    height: auto;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 25;
+
+}
+
+
+div.teacher_mail {
+    float: left;
+    width: auto;
+    height: auto;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 25;
+
+}
+
+div.teacher_phone {
+    float: left;
+    min-width: 80%;
+    width: auto;
+    height: auto;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 25;
+}
+
+div.additional_information {
+    float: left;
+    width: auto;
+    height: auto;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 25;
+}
+
+div.student {
+    float: left;
+    min-width: 80%;
+    height: auto;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 25;
+}
+
+div.personal_number {
+    float: left;
+    width: auto;
+    height: auto;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 25;
+}
+
+div.group {
+    float: left;
+    min-width: 80%;
+    height: auto;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 25;
+}
+
+
+
+div.student_phone {
+    float: left;
+    min-width: 100%;
+    height: auto;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 25;
+
+}
+
+div.student_mail {
+    float: left;
+    width: auto;
+    height: auto;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 25;
+
+}
+
+div.student_progress {
+    height: 100%;
+    width: 100%;
+}
+
+h2.prog {
+    text-align: center;
+
+    border: solid 2px black;
+}
+
+div.kt_1 {
+    float: left;
+    width: 100%;
+    height: auto;
+    font-size: 25;
+    padding-left: 20px;
+    padding-top: 15px;
+    
+}
+
+div.kt_2 {
+    float: left;
+    width: 100%;
+    height: auto;
+    font-size: 25;
+    padding-left: 20px;
+    padding-top: 15px;
+    
+}
+
+div.kt_3 {
+    float: left;
+    width: 100%;
+    height: auto;
+    font-size: 25;
+    padding-left: 20px;
+    padding-top: 15px;
+    
+}
+
+div.rating {
+    float: left;
+    width: 100%;
+    height: auto;
+    font-size: 25;
+    padding-left: 20px;
+    padding-top: 15px;
+    
+}
+
+a.git_hub {
+    color: #273027;    
+}
+
+div.changepassword {
+    float: right;
+    
+    bottom: auto;
+    font-size: 15;
+}
+
+
+div.changepass {
+    text-align: center;
+}
+
+
+
+div.changepassword a {
+    text-decoration: none;
+    color: black;
+    }
+
+
+div.Authorization {
+    float: center;
+    }
+
+
+
+
+h1.std_page {
+    text-align: center;
+}
+
+h2.std_page {
+    text-align: center;
+}
+
+table.std_page {
+    margin: auto;
+}
+
+form.login p.username {padding-top: 5px;}
+
+form.login p.login {
+    font-size: 16;
+    padding-top: 5px;
+    margin-bottom: -10px;
+    padding-right: 140px;
+    }
+
+form.login p.password {
+    font-size: 16;
+    margin-bottom: -4px;
+    padding-right: 130px;
+    }
+
+
+
+
+
+
+
+
+input.lab {
+    border-radius: 25px;
+}
+
+input.add_lab {
+    float: right;
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	display: block;
+	border-radius: 10px;
+	}
+
+
+
+
+
+
+/* Menu */
+
+
+body {
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  
+  /* Menu */
+  
+  .menu {
+    background: #555  repeat left top;
+    left: -285px; /* прячем меню */
+    height: 100%;
+    position: fixed;
+    width: 285px;
+  }
+  
+  
+  /* Basic CSS */
+  
+  .background {
+    height: 10%;
+    width: 10%;
+    -webkit-background-size: cover;
+       -moz-background-size: cover;
+         -o-background-size: cover;
+            background-size: cover;
+  }
+  
+  .menu ul {
+    border-top: 1px solid #555;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .menu li {
+    border-bottom: 1px solid #555;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 45px;
+    padding-bottom: 3px;
+    padding-left: 20px;
+    padding-top: 3px;
+  }
+  
+  .menu li:hover {
+    cursor: pointer;
+    background-color: #555;
+    }
+  
+  .menu a {
+    color: #fff;
+    font-size: 15px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  
+  .icon-close {
+    cursor: pointer;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 6px;
+  }
+  
+  .icon-menu {
+    max-width: 5%;
+    color: #fff;
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    padding-bottom: 25px;
+    padding-left: 25px;
+    padding-top: 25px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  
+  .icon-menu img {
+    margin-right: 5px;
+    max-height: 5%;
+    max-width: 2%;
+    position: fixed;
+
+  }

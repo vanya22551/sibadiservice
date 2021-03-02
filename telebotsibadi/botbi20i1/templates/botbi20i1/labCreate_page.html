@@ -1,0 +1,41 @@
+{% extends 'botbi20i1/base.html' %}
+
+
+
+{% block title %}
+    Создание лабы
+{% endblock %}
+
+<body>
+    {% block content %}
+        <h1 align="center">
+            Добавление лабы
+        </h1>
+        <form align="center" method="post">
+            {% csrf_token %}
+            <p class="name">
+                Название
+            </p>
+            <p class="lab_name">
+                {{ form.name }}
+            </p>
+            <p class="description">
+                Описание
+            </p>
+            <p class="lab_description">
+                {{ form.description }}
+            </p>
+            <p class="kt">
+                Контрольная точка
+            </p>
+            <p class="lab_kt">
+                {{ form.kt }}
+            </p>
+
+            <p class="lab_group">
+                {{ form.group_id}}
+            </p>
+            <input type="submit" value="Добавить">
+        </form>
+    {% endblock %}
+</body>

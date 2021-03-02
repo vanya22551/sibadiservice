@@ -1,0 +1,37 @@
+{% extends 'botbi20i1/base.html' %}
+
+{% block title %}
+    Главная страница
+{% endblock %}
+
+<body>
+
+    {% block content %}
+
+    <h1 align="center"> Здесь должно быть название </h1>
+
+    <table class="facepage" align="center" >
+        <tr>
+            <th><b>Номер группы</b></th>
+            <th><b>Курс</b></th>
+        </tr>
+
+        {% for group in groups %}
+        <tr>
+            <td align="left">
+                <a href="{% url 'group' group_id=group.id %}"
+                                style="font-family:times;color:black;font-size:15px">
+                {{group.name}}
+            </a>
+            </td>
+            <td align="center"
+                style="font-family:times;color:black;font-size:15px">
+                {{group.course}}
+            </td>
+
+        </tr>
+        {% endfor %}
+
+    </table>
+    {% endblock %}
+</body>

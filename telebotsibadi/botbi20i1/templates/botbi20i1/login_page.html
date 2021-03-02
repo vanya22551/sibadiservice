@@ -1,0 +1,39 @@
+{% extends 'botbi20i1/base.html' %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+        Авторизация
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+        <div class="Authorization" >
+            <h1 align="center">
+                Авторизация
+            </h1>
+            <form  class="login" align="center" method="post">
+                {% csrf_token %}
+                <p class="login">
+                    Логин
+                </p>
+                <p class="username">
+                    {{ form.username }}
+                </p>
+                <p class="password">
+                    Пароль
+                </p>
+                <p>
+                    {{ form.password }}
+                </p>
+
+                <p>
+                    <input type="submit" value="Войти">
+                </p>
+            </form>
+
+        </div>
+    {% endblock %}
+</body>
+</html>

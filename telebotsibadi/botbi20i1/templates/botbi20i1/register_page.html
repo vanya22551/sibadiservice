@@ -1,0 +1,22 @@
+{% extends 'botbi20i1/base.html' %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+        Регистрация
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+    <div class="col-5" >
+    <h1>Регистрация</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Добавить">
+    </form>
+    </div>
+    {% endblock %}
+</body>
+</html>

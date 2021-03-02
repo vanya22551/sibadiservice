@@ -1,0 +1,99 @@
+{% extends 'botbi20i1/base.html' %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}Личный кабинет{% endblock %}
+</head>
+
+
+
+<body>
+
+    {% block content %}
+        {% for student in students %}
+            {% if student.user == request.user %}
+            <div class="block1" >
+                <div class="personal_data">
+                        <h2 class="data"> Личные данные</h2>
+                        
+                    <div class="student">
+                        Студент:  {{student.second_name}} {{student.name}} {{ student.patronymic }}
+                    </div>
+                    <div class="changepassword">
+                        <a href="{% url 'changepassword_page' %}">Сменить пароль</a>
+                    </div>
+                    <div class="group">
+                        Группа: {{student.group_id}}
+                    </div>
+                    <div class="personal_number">
+                        Логин(номер зачетной книжки): {{student.personal_number}}
+                    </div>
+                    <div class="student_mail">
+                        Адрес электронной почты: {{student.email}}
+                    </div>
+                    <div class="student_phone">
+                        Контактный телефон: {{ student.phone }}
+                    </div>
+
+                    <div class="additional_information">
+                        Git hub:<br>
+                        <a class="git_hub" href="{{student.git_hub}}">{{student.git_hub}}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="block2_student">
+               <div class="student_progress">
+                     <h2 class="prog"> Успеваемость</h2>   
+
+                    <div class="kt_1">
+                         KT 1: {{student.rating_1KT}}
+                    </div>
+                    <div class="kt_2">
+                         KT 2: {{student.rating_2KT}}
+                    </div>    
+                    <div class="kt_3">
+                         KT 3: {{student.rating_3KT}}
+                    </div>
+                    <div class="rating">
+                         Итоговый рейтинг: {{student.rating}}
+                    </div> 
+               </div>         
+            </div>
+            {% endif %}
+        {% endfor %}
+
+        {% for teacher in teachers %}
+        {% if teacher.user == request.user %}
+            <div class="block1" >
+                <div class="personal_data">
+                        <h2 class="data"> Личные данные</h2>
+                        
+                    <div class="teacher">
+                        Преподователь:  {{teacher.second_name}} {{teacher.name}} {{ teacher.patronymic }}
+                    </div>
+                    <div class="changepassword">
+                        <a href="{% url 'changepassword_page' %}">Сменить пароль</a>
+                    </div>
+    
+                    <div class="teacher_mail">
+                        Адрес электронной почты: {{teacher.user.email}}
+                    </div>
+                    <div class="teacher_phone">
+                        Контактный телефон: {{ teacher.phone }}
+                    </div>
+                    <div class="additional_information">
+                        Дополнительная информация:<br>{{teacher.additional_information}}
+                    </div>
+                </div>
+            </div>
+            <div class="block2">
+
+            </div>
+        {% endif %}
+        {% endfor %}
+
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,152 @@
+{% extends 'botbi20i1/base.html'%}
+{% block title %}
+    Группа
+{% endblock %}
+
+{% block content%}
+
+<table class="group">
+    <tr>
+        <th>Студент</th>
+            {% for stat in stats%}
+                {% with student=students|first %}
+                    {% if stat.student.id == student.id %}
+                        <th>
+
+                            {{stat.lab.name}}
+
+                        </th>
+                    {% endif %}
+                {% endwith %}
+            {% endfor %}
+        <th>
+            Рейтинг за КТ1
+        </th>
+        <th>
+            Рейтинг за КТ2
+        </th>
+        <th>
+            Рейтинг за КТ3
+        </th>
+        <th>
+            Общий рейтинг
+        </th>
+    </tr>
+    {% for student in students %}
+        <tr>
+            
+            <td>
+                {% if request.user == student.user %}
+                    <a  class="student"
+                        href="{{student.git_hub}}"
+                        id='{{student.user_id}}'>
+                        {{student.second_name}} {{student.name}}
+                </a>
+                {% elif not teachr  %}
+                    <a class="student"
+                        id='{{student.user_id}}'>
+                        {{student.second_name}} {{student.name}}
+                {% else %}
+                    <a  class="student"
+                        href="{% url 'student_page' id=student.user.id %}"
+                        id='{{student.user_id}}'>
+                        {{student.second_name}} {{student.name}}
+                {% endif %}
+            </td>
+            {% for stat in stats %}
+                {% if stat.student.id == student.id %}
+
+                        {% if request.user == student.user %}
+
+                            <td>
+                                <i class="fas fa-plus" type="button"
+                                    id="{{stat.id}}"
+                                    onclick="location.href='{% url 'labs_page' id=stat.lab.id %}?next={{  request.get_full_path|urlencode }}';">
+                                </i>
+                            </td>
+                        
+                        {% elif not teachr  %}
+                            <td>
+                                <i class="fas fa-minus" 
+                                    id="{{stat.id}}"
+                                </i>
+                            </td>
+                        {% else %}
+                            <td>
+                                
+                                <input class="stats {{stat.lab.kt}}"
+                                type="checkbox"
+                                id="{{stat.id}}"
+                                {% if stat.status == True %}
+                                    checked
+                                {% endif %}>
+                            </td>
+ 
+                        {% endif %}    
+   
+                {% endif %}
+            {% endfor %}
+
+            <td>
+                <data
+                        class="rating kt1"
+                        rank="{{student.id}}">
+                    {{student.rating_1KT}}
+                </data>
+            </td>
+            <td>
+                <data
+                        class="rating kt2"
+                        rank="{{student.id}}">
+                    {{student.rating_2KT}}
+                </data>
+            </td>
+            <td>
+                <data
+                        class="rating kt3"
+                        rank="{{student.id}}">
+                    {{student.rating_3KT}}
+                </data>
+            </td>
+            <td>
+                <data
+                        class="rating total"
+                        rank="{{student.id}}">
+                    {{student.rating}}
+                </data>
+            </td>
+
+        </tr>
+    {% endfor %}
+
+</table>
+
+<script>
+let items = document.querySelectorAll('.stats');
+
+for (const item of items) {
+    item.addEventListener('click', function(){
+        let id = this.getAttribute('id');
+        let this_click = this;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                this_click.innerHTML= this.responseText;
+                    console.log(this.responseText);
+                  document.querySelector('.rating.kt1[rank="'+JSON.parse(this.responseText)['user_id'] +'"]'
+                  ).innerHTML = JSON.parse(this.responseText)['kt_1'];
+                  document.querySelector('.rating.kt2[rank="'+JSON.parse(this.responseText)['user_id'] +'"]'
+                  ).innerHTML = JSON.parse(this.responseText)['kt_2'];
+                  document.querySelector('.rating.kt3[rank="'+JSON.parse(this.responseText)['user_id'] +'"]'
+                  ).innerHTML = JSON.parse(this.responseText)['kt_3'];
+                  document.querySelector('.rating.total[rank="'+JSON.parse(this.responseText)['user_id'] +'"]'
+                  ).innerHTML = JSON.parse(this.responseText)['rating'];
+                console.log(JSON.parse(this.responseText).rating);
+            }
+        };
+        xhttp.open("GET", "/api/v1/update_stats_status?stats_id="+id+"&status=1", true);
+        xhttp.send();
+            });
+}
+</script>
+{% endblock%}

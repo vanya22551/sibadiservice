@@ -1,0 +1,49 @@
+{% extends 'botbi20i1/base.html' %}
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    {% block title%}
+        {{student.name}}
+    {% endblock %}
+</head>
+
+
+<body>
+    {% block content %}
+        <h1 class="std_page">{{student.second_name}} {{student.name}}</h1>
+        <h2 class="std_page">{{student.group_id}}</h2>
+        <table class="std_page">
+            <tr>
+                <th class="lab">
+                    Лаба
+                </th>
+                <th class="file">
+                    Решение
+                </th>
+            </tr>
+            {% for stat in stats %}
+            <tr>
+                <td class="labname">
+                    {{stat.lab.name}}
+                </td>
+                <td class="file">
+                    {% for file in files %}
+                        {% if file.lab.name == stat.lab.name %}
+                            <a href="/media/{{file.file}}">{{file.file}}</a>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+
+    {% endblock %}
+
+</body>
+</html>
