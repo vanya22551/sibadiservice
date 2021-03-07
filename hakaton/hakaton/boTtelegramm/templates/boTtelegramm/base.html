@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+</head>
+<body class="base">
+    <div class="hidden_menu">
+        <ul>
+            <a href="{% url 'sibadi' %}">
+                <li>
+                    СибАДИ
+                </li>
+            </a>
+            <a href="{% url 'omgtu' %}">
+                <li>
+                    ОмГТУ
+                </li>
+            </a>
+            <a href="{% url 'omgu' %}">
+                <li>
+                    ОмГУ
+                </li>
+            </a>
+            <a href="{% url 'omgpu' %}">
+                <li>
+                    ОмГПУ
+                </li>
+            </a>
+            <a href="{% url 'omgups' %}">
+                <li>
+                    ОмГУПС
+                </li>
+            </a>
+            <a href="{% url 'test' %}">
+                <li>
+                    Тест
+                </li>
+            </a>
+        </ul>
+
+    </div>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <script src="{% static 'js/base.js' %}"></script>
+</body>
+</html>

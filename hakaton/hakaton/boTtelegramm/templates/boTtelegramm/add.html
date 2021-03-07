@@ -1,0 +1,20 @@
+% extends 'boTtelegramm/base.html' %}
+
+
+
+{% block title %}
+    СибАДИ
+{% endblock %}
+
+{% block content %}
+
+    
+<form class="add_file" enctype="multipart/form-data" method="post" >
+    {% csrf_token %}
+    <p class="file">
+        {{ form }}
+    </p>
+    <input type="submit" value="Сохранить">
+</form>
+    
+{% endblock %}

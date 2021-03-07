@@ -1,0 +1,41 @@
+{% extends 'boTtelegramm/base.html' %}
+
+
+
+{% block title %}
+    СибАДИ
+{% endblock %}
+
+{% block content %}
+
+    
+    <div class="sibadi">
+        <div >
+        </div>
+        <div>
+            <h2>Новости СибАДИ</h2>
+            
+        </div>
+        {% for new in news %}
+        <table class="post">
+            <tr>
+                <th class="text">
+                    {{new.text}}                    
+                </th>
+            </tr>
+            <tr>
+                <td class="photo">
+                    <img src="{{ new.photo }}" width="200px" height="300px"> 
+                </td>
+            </tr>
+            <tr>
+                <td class="time">
+                    {{new.Date}}
+                </td>
+            </tr>
+   
+        </table><br>
+        {% endfor %}
+    </div>
+    
+{% endblock %}
