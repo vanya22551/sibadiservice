@@ -14,11 +14,9 @@ group_id_omgu = '-58265344' #Омгу
 group_id_omgpu = '-2944428' #Омгпу
 
 def request_get(group):
-	http_url   = "https://api.vk.com/method/wall.get"
-	group_id   = group
-	#group_id = '-71122446'     #Oмгту
-	#group_id = '-203090991' 
-	offset     = 0
+	http_url = "https://api.vk.com/method/wall.get"
+	group_id = group
+	offset = 0
 	count = 1
 
 	r = requests.get(http_url,
@@ -253,7 +251,6 @@ def test(request):
     }
     return render(request, 'boTtelegramm/test.html', context)
 
-#background-image: url("/static/img/СибАДИ.png");
 
 
 
