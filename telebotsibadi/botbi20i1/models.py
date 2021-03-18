@@ -5,37 +5,9 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-
-class Group(models.Model):
-    name = models.CharField(max_length=20,
-                            default="")
-    course = models.CharField(max_length=20,
-                              default="")
-
-    def __str__(self):
-        return self.name
-
-
-class Laboratory(models.Model):
-    description = models.TextField(default="",
-                                     verbose_name="Описание")
-    name = models.CharField(max_length=200,
-                            default="", verbose_name="Название")
-    kt = models.PositiveIntegerField(default=1,
-                                     verbose_name="КТ")
-
-    group_id = models.ForeignKey(Group,
-                                on_delete=models.CASCADE,
-                                 default=1)
-    date_added = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.name
-
-
-
-
-
+"""
+    Преподователь, информация о нем
+"""
 class Teacher(models.Model):
     second_name = models.CharField(max_length=50,
                              default="")
@@ -57,6 +29,50 @@ class Teacher(models.Model):
     def __str__(self):
         return self.second_name + " " + self.name + " " + self.patronymic
 
+
+"""
+    Группы
+"""
+class Group(models.Model):
+    name = models.CharField(max_length=20,
+                            default="")
+    course = models.CharField(max_length=20,
+                              default="")
+    teacher = models.ForeignKey(Teacher, default=1, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+"""
+    Лаборантоные работы
+"""
+class Laboratory(models.Model):
+    description = models.TextField(default="",
+                                     verbose_name="Описание")
+    name = models.CharField(max_length=200,
+                            default="", verbose_name="Название")
+    kt = models.PositiveIntegerField(default=1,
+                                     verbose_name="КТ")
+
+    group_id = models.ForeignKey(Group,
+                                on_delete=models.CASCADE,
+                                 default=1)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    weight = models.FloatField(default=0,  
+                                validators=[MinValueValidator(0),
+                                               MaxValueValidator(100.00)],
+                                blank=True,
+                                verbose_name="Вес лабы (%)")
+
+    def __str__(self):
+        return self.name
+
+
+"""
+    Студент, вся информация о нем, рейтинги
+"""
 class Student(models.Model):
     group_id = models.ForeignKey(Group,
                                  on_delete=models.CASCADE,
@@ -95,6 +111,9 @@ class Student(models.Model):
         return self.second_name + " " + self.name + " " + self.patronymic
 
 
+"""
+    Файлы, которые студент отправляет на проверку
+"""
 class File(models.Model):
     file = models.FileField()
 
@@ -107,6 +126,9 @@ class File(models.Model):
         return self.student.name + " " + self.lab.name + " " + self.file.name
 
 
+"""
+    Подсказки, связаны с лабой
+"""
 class Hint(models.Model):
     text = models.TextField(default="")
     lab = models.ForeignKey(Laboratory,
@@ -117,6 +139,28 @@ class Hint(models.Model):
         return self.text
 
 
+"""
+    Контольные точки, можно задать вес и связать с группой
+"""
+class EducationControl(models.Model):
+
+    KT =  [
+        (1, (1)),
+        (2, (2)),
+        (3, (3)),
+    ]
+    number = models.IntegerField(default="1", choices=KT, verbose_name='Номер КТ')
+    weight = models.IntegerField(default=0, validators=[MinValueValidator(0),
+                                            MaxValueValidator(100.00)], verbose_name="Вес КТ (%)")
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, default=1,  verbose_name="Группа")
+
+    def __str__(self):
+        return self.group.name + " KT№ " + str(self.number) 
+
+
+"""
+    Статистика, лабараторные привязываются к каждому студенту, имеют статус(true/false)
+"""
 class Stats(models.Model):
     lab = models.ForeignKey(Laboratory,
                             on_delete=models.CASCADE)

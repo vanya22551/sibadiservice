@@ -9,22 +9,27 @@ main {
     
 }
 
-main h1.title {
+h1.title {
     text-align: center;
 }
 
-main TABLE.group{
-    min-width: 100%; /* Ширина таблицы */
-    max-width: 100%;
-    float: center;
+TABLE.group{
+    min-width: 96%; /* Ширина таблицы */
+    max-width: 96%;
+    margin-left: 2%;
     border-collapse: collapse;
 
    }
+p.kt {
+    text-align: center;
+    font-size: small;
+}
+
 
 a.student {
     font-family:times;
     color:black;
-    font-size:15px
+    font-size: 17px;
 }
 main TABLE.facepage{
     min-width: 50%;
@@ -39,7 +44,8 @@ main TABLE.facepage{
 
     padding: 3px; /* Поля вокруг содержимого таблицы */
     border: 1px solid black; /* Параметры рамки */
-    text-align: center; /* Выравнивание по левому краю */
+    text-align: center;
+    
    }
 
     TH a{ color: #80ad80;}
@@ -62,51 +68,80 @@ TD.file a {
 }
 
 div.block1{
-
     width: 50%;
-
+    border-radius: 2%;
     height: 100%;
     background: #d5e1f2;
-    padding: 5px;
-
-    border: solid 1px black;
+    padding: 10px;
     float: left;
 
 }
 
+
+
 div.block2{
 
     width: 50%;
-
+    border-radius: 2%;
     height: 100%;
     background: #d5e1f2;
-    padding: 5px;
-
-    border: solid 1px black;
+    padding: 10px;
     float: right;
-
-}
-
-div.block2_student{
-
-    width: 50%;
-
-    height: 100%;
-    background: #d5e1f2;
-    padding: 5px;
-
-    border: solid 1px black;
-    float: right;
+    align-content: center;
 
 }
 
 div.personal_data {
-    width: 100%;
+    background-color: rgb(218, 216, 216);
+    border-radius: 15px;
+    width: 96%;
     height: 100%;
+    overflow: auto;
+    float: right;
+}
+
+div.teacher_otherInfo {
+    overflow: auto;
+    background-color: rgb(218, 216, 216);
+    border-radius: 15px;
+    width: 96%;
+    height: 100%;
+}
+
+div.student_progress {
+    overflow: auto;
+    background-color: rgb(218, 216, 216);
+    border-radius: 15px;
+    width: 96%;
+    height: 100%;
+}
+
+
+div.teacher_groups {
+    padding-left: 35%;
+    padding-top: 3%;
+}
+
+table.teacher_groups td {
+    border: solid 1px rgb(218, 216, 216);
+    font-size: 25;
+    padding-right: 2%;
+}
+
+a.group_page {
+    color:black;
+}
+
+table.teacher_groups th {
+    border: solid 1px rgb(218, 216, 216);
+    font-size: 25;
+    padding-right: 5%;
+    white-space: nowrap;
 }
 
 h2.data {
     text-align: center;
+    border-radius: 15px;
     border: solid 2px black;
 
 }
@@ -132,13 +167,63 @@ div.teacher_name {
 }
 
 div.labpage {
+
     width: 100%;
-    float: right;
+
+}
+div.lab {
+    left: 41%;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    font-size: 35;
+}
+
+button.back {
+    float: left;
+    margin-top: 15px;
+    margin-left: 60px;
+    font-size: 18;
+    outline: none;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+}
+
+
+h2.ex {
+    padding-left: 60px;
+}
+
+p.disc {
+    padding-left: 80px;
+    font-size: 20;
+}
+
+div.file {
+    padding-left: 60px;
+}
+
+a.file {
+    padding-left: 20px;
+    text-decoration: none;
+    color: #273027; 
+    font-size: 20;
 }
 
 div.addfile {
     width: 100%;
     float: right;
+}
+
+input.changef {
+    border-radius: 10px;
+    margin-right: 30px;
+}
+
+input.deletef {
+    border-radius: 10px;
+    margin-left: 30px;
 }
 
 div.teacher_email {
@@ -183,7 +268,7 @@ div.additional_information {
 
 div.student {
     float: left;
-    min-width: 80%;
+    min-width: 79%;
     height: auto;
     padding-left: 20px;
     padding-top: 15px;
@@ -230,18 +315,32 @@ div.student_mail {
 
 }
 
-div.student_progress {
-    height: 100%;
-    width: 100%;
-}
+
 
 h2.prog {
     text-align: center;
-
+    border-radius: 15px;
     border: solid 2px black;
 }
 
-div.kt_1 {
+
+
+div.kt_check {
+    height: auto;
+    width: auto;
+    cursor: pointer;
+}
+
+div.labs_kt {
+    height: auto;
+    width: auto;
+    cursor: pointer;
+    position: absolute;
+    background: #d5e1f2;
+    display: none;
+}
+
+div.KT {
     float: left;
     width: 100%;
     height: auto;
@@ -251,25 +350,7 @@ div.kt_1 {
     
 }
 
-div.kt_2 {
-    float: left;
-    width: 100%;
-    height: auto;
-    font-size: 25;
-    padding-left: 20px;
-    padding-top: 15px;
-    
-}
 
-div.kt_3 {
-    float: left;
-    width: 100%;
-    height: auto;
-    font-size: 25;
-    padding-left: 20px;
-    padding-top: 15px;
-    
-}
 
 div.rating {
     float: left;
@@ -281,15 +362,28 @@ div.rating {
     
 }
 
+button.kt_check {
+    outline: none;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    font-size: 20;
+}
+
 a.git_hub {
     color: #273027;    
 }
 
+a.lab {
+    text-decoration: none;
+    color: #273027; 
+}
+
 div.changepassword {
     float: right;
-    
     bottom: auto;
     font-size: 15;
+    margin-right: 10px;
 }
 
 
@@ -340,11 +434,62 @@ form.login p.password {
     }
 
 
+h1.lab_create{
+    text-align: center;
+}
 
+p.name {
+    text-align: center;
+}
 
+p.lab_name {  
+    margin-top: -12px;
+    text-align:  center;
+}
 
+p.description {
+    text-align: center;
+}
 
+p.lab_description{
+    margin-top: -12px;
+    text-align:  center;
+}
 
+p.kt {
+    text-align: center;
+}
+
+p.lab_kt {
+    margin-top: -12px;
+    text-align:  center;
+}
+
+p.weight {
+    text-align: center;
+}
+
+p.weight_lab {
+    margin-top: -12px;
+    text-align:  center;
+}
+
+p.lab_group {
+    margin-top: -12px;
+    text-align:  center;
+}
+
+input.add {
+    
+    border-radius: 25px;
+  
+}
+
+div.add {
+    text-align: center;
+    border-radius: 25px;
+  
+}
 
 input.lab {
     border-radius: 25px;
@@ -383,6 +528,7 @@ body {
     height: 100%;
     position: fixed;
     width: 285px;
+    opacity: 0.9;
   }
   
   

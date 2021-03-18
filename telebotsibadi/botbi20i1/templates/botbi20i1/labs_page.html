@@ -8,21 +8,37 @@
     {% endblock %}
 </head>
 
-
-<>
+<body>
     {% block content %}
-        <div class="labpage" align="center">
-            <h1>{{lab}}</h1>
-            <h2 >Задание:</h2>
-            <p> {{lab.description}}<br></p>
-            {%if file == '' %}
-                <p>Ответ в виде файла: Ответ не прикреплен</p>
-                <input type="button" onclick="location.href='{% url 'add_file' %}?next={{  request.get_full_path|urlencode }}';" id='addfile' value='Прикрепить файл с решением'>
-            {% else %}
-                <p>Ответ в виде файла: {{file.file}}</p> 
-            <input type="button" onclick="location.href='{% url 'change_file' %}?next={{  request.get_full_path|urlencode }}';" id='changefile' value='Изменить ответ'>
-                <input type="button" onclick="location.href='{% url 'delete_file' %}?next={{  request.get_full_path|urlencode }}';" id='deletefile' value='Удалить ответ'>
-            {% endif %}
+        <div class="labpage" >
+            
+            <div class="lab">
+                <!-- <button class="back" onclick="history.back();"><i class="fas fa-long-arrow-alt-left"></i></button> -->
+                {{lab}}
+            </div>
+            <h2 class="ex">Задание:</h2>
+            <p class="disc"> {{lab.description}}<br></p>
+            <div class="file">
+                {%if file == '' %}
+                    <p>Ответ в виде файла: Ответ не прикреплен</p>
+                    <input type="button" 
+                        onclick="location.href='{% url 'add_file' %}?next={{  request.get_full_path|urlencode }}';" 
+                        id='addfile' 
+                        value='Прикрепить файл с решением'>
+                {% else %}
+                    <p class="ans">Ответ в виде файла: <br> <a class="file" href="/media/{{file.file}}">{{file.file}}</a></p>
+                    <input type="button" 
+                        class="changef"
+                        onclick="location.href='{% url 'change_file' %}?next={{  request.get_full_path|urlencode }}';" 
+                        id='changefile' 
+                        value='Изменить ответ'>
+                    <input type="button"
+                        class="deletef" 
+                        onclick="location.href='{% url 'delete_file' %}?next={{  request.get_full_path|urlencode }}';" 
+                        id='deletefile' 
+                        value='Удалить ответ'>
+                {% endif %}
+            </div>
             
         </div>
     {% endblock %}

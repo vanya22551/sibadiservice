@@ -7,8 +7,6 @@
     {% block title %}Личный кабинет{% endblock %}
 </head>
 
-
-
 <body>
 
     {% block content %}
@@ -16,7 +14,7 @@
             {% if student.user == request.user %}
             <div class="block1" >
                 <div class="personal_data">
-                        <h2 class="data"> Личные данные</h2>
+                    <h2 class="data"> Личные данные</h2>
                         
                     <div class="student">
                         Студент:  {{student.second_name}} {{student.name}} {{ student.patronymic }}
@@ -28,7 +26,7 @@
                         Группа: {{student.group_id}}
                     </div>
                     <div class="personal_number">
-                        Логин(номер зачетной книжки): {{student.personal_number}}
+                        Номер зачетной книжки: {{student.personal_number}}
                     </div>
                     <div class="student_mail">
                         Адрес электронной почты: {{student.email}}
@@ -43,22 +41,113 @@
                     </div>
                 </div>
             </div>
-            <div class="block2_student">
-               <div class="student_progress">
-                     <h2 class="prog"> Успеваемость</h2>   
+            <div class="block2">
+               <div class="student_progress" id="student_progress">
+                    <h2 class="prog"> Успеваемость</h2>   
 
-                    <div class="kt_1">
+                    <div class="KT" id="KT1">
                          KT 1: {{student.rating_1KT}}
+                         <button class="kt_check" id="kt_1" ><i id=0 class="far fa-arrow-alt-circle-right"></i></button>
+                            <div class="labs_kt">
+                                <table>
+                                    <tr>
+                                        <th>
+                                            Название
+
+                                        </th>
+                                        <th>
+                                            Статус
+                                        </th>
+                                    </tr>
+                                    {% for stat in stats %}
+                                    {% if stat.student == student %}
+                                    {% if stat.lab.kt == 1 %}
+                                    <tr>
+                                        <td>
+                                            <a href='{% url 'labs_page' id=stat.lab.id %}?next={{request.get_full_path|urlencode}}';" id="{{stat.lab.pk}}" class="lab">
+                                                {{stat.lab}}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {{stat.status}}
+                                        </td>
+                                    </tr>
+                                    
+                                    {% endif %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </table>
+                            </div>                         
                     </div>
-                    <div class="kt_2">
-                         KT 2: {{student.rating_2KT}}
+                    <div class="KT" id="KT2">
+                         KT 2: {{student.rating_2KT}} 
+                         <button class="kt_check" ><i id="1" class="far fa-arrow-alt-circle-right"></i></button>
+                            <div class="labs_kt" id="labs_kt">
+                                <table>
+                                    <tr>
+                                        <th>
+                                            Название
+
+                                        </th>
+                                        <th>
+                                            Статус
+                                        </th>
+                                    </tr>
+                                    {% for stat in stats %}
+                                    {% if stat.student == student %}
+                                    {% if stat.lab.kt == 2 %}
+                                    <tr>
+                                        <td>
+                                            {{stat.lab}}
+                                        </td>
+                                        <td>
+                                            {{stat.status}}
+                                        </td>
+                                    </tr>
+                                    
+                                    {% endif %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </table>
+                            </div>
                     </div>    
-                    <div class="kt_3">
+                    <div class="KT" id="KT3">
                          KT 3: {{student.rating_3KT}}
+                         <button class="kt_check" ><i id="2" class="far fa-arrow-alt-circle-right"></i></i></button>
+                            <div class="labs_kt">
+                                <table>
+                                    <tr>
+                                        <th>
+                                            Название
+
+                                        </th>
+                                        <th>
+                                            Статус
+                                        </th>
+                                    </tr>
+                                    {% for stat in stats %}
+                                    {% if stat.student == student %}
+                                    {% if stat.lab.kt == 3 %}
+                                    <tr>
+                                        <td>
+                                            {{stat.lab}}
+                                        </td>
+                                        <td>
+                                            {{stat.status}}
+                                        </td>
+                                    </tr>
+                                    
+                                    {% endif %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </table>
+                            </div>
+                         
                     </div>
-                    <div class="rating">
+                    <div  class="rating" id="rating">
                          Итоговый рейтинг: {{student.rating}}
                     </div> 
+                    
                </div>         
             </div>
             {% endif %}
@@ -78,7 +167,7 @@
                     </div>
     
                     <div class="teacher_mail">
-                        Адрес электронной почты: {{teacher.user.email}}
+                        Адрес электронной почты: {{teacher.email}}
                     </div>
                     <div class="teacher_phone">
                         Контактный телефон: {{ teacher.phone }}
@@ -89,11 +178,39 @@
                 </div>
             </div>
             <div class="block2">
-
+                <div class="teacher_otherInfo">
+                    <h2 class="prog"> Группы</h2>
+                    <div class="teacher_groups">
+                        <table class="teacher_groups">
+                            <tr>
+                                <th>
+                                    Номер группы
+                                </th>
+                                <th>
+                                    Курс
+                                </th>
+                            </tr>
+                            {% for group in groups %}
+                            {% if group.teacher.name == teacher.name %}
+                                <tr>
+                                    <td>
+                                        <a class ="group_page" href="{% url 'group_page' group_id=group.id %}">
+                                        {{group.name}}
+                                    </td>
+                                    <td>
+                                        {{group.course}}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </table>
+                </div>
             </div>
         {% endif %}
         {% endfor %}
 
     {% endblock %}
+    
+
 </body>
 </html>

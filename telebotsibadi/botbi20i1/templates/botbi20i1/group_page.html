@@ -16,17 +16,22 @@
                             {{stat.lab.name}}
 
                         </th>
+                    {% else %}
+
                     {% endif %}
                 {% endwith %}
             {% endfor %}
         <th>
             Рейтинг за КТ1
+            <p class="kt">Вес: {{kt_1.weight}}</p>
         </th>
         <th>
             Рейтинг за КТ2
+            <p class="kt">Вес: {{kt_2.weight}}</p>
         </th>
         <th>
             Рейтинг за КТ3
+            <p class="kt">Вес: {{kt_3.weight}}</p>
         </th>
         <th>
             Общий рейтинг
@@ -57,15 +62,13 @@
                 {% if stat.student.id == student.id %}
 
                         {% if request.user == student.user %}
-
                             <td>
                                 <i class="fas fa-plus" type="button"
                                     id="{{stat.id}}"
                                     onclick="location.href='{% url 'labs_page' id=stat.lab.id %}?next={{  request.get_full_path|urlencode }}';">
                                 </i>
                             </td>
-                        
-                        {% elif not teachr  %}
+                        {% elif not teachr %}
                             <td>
                                 <i class="fas fa-minus" 
                                     id="{{stat.id}}"

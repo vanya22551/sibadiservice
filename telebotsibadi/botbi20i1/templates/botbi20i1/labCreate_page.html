@@ -8,10 +8,10 @@
 
 <body>
     {% block content %}
-        <h1 align="center">
+        <h1 class="lab_create">
             Добавление лабы
         </h1>
-        <form align="center" method="post">
+        <form class="lab_create" method="post">
             {% csrf_token %}
             <p class="name">
                 Название
@@ -19,23 +19,37 @@
             <p class="lab_name">
                 {{ form.name }}
             </p>
+
             <p class="description">
                 Описание
             </p>
+
             <p class="lab_description">
                 {{ form.description }}
             </p>
+
             <p class="kt">
                 Контрольная точка
             </p>
+
             <p class="lab_kt">
                 {{ form.kt }}
+            </p>
+
+            <p class="weight">
+                Вес лабы (%)
+            </p>
+
+            <p class="weight_lab">
+                {{ form.weight }}
             </p>
 
             <p class="lab_group">
                 {{ form.group_id}}
             </p>
-            <input type="submit" value="Добавить">
+            <div class="add">
+                <input class="add" type="submit" value="Добавить">
+            </div>
         </form>
     {% endblock %}
 </body>
