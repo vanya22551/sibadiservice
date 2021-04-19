@@ -64,3 +64,6 @@ class EditTeacherInformationForm(ModelForm):
     class Meta:
         model = Teacher
         fields = {'email', 'phone', 'additional_information', }
+
+
+

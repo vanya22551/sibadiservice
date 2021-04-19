@@ -36,8 +36,9 @@
                     </div>
 
                     <div class="additional_information">
-                        Git hub:<br>
-                        <a class="git_hub" href="{{student.git_hub}}">{{student.git_hub}}</a>
+                        Git hub: 
+                        <a class="git_hub" href="{{student.git_hub}}">{{student.git_hub}}</a><br>
+                        <a class="statement" href="http://umu.sibadi.org/Ved/Ved.aspx?id=168430">Ведомость по предмету</a>
                     </div>
                 </div>
             </div>
@@ -98,7 +99,9 @@
                                     {% if stat.lab.kt == 2 %}
                                     <tr>
                                         <td>
-                                            {{stat.lab}}
+                                            <a href='{% url 'labs_page' id=stat.lab.id %}?next={{request.get_full_path|urlencode}}';" id="{{stat.lab.pk}}" class="lab">
+                                                {{stat.lab}}
+                                            </a>
                                         </td>
                                         <td>
                                             {{stat.status}}
@@ -130,7 +133,9 @@
                                     {% if stat.lab.kt == 3 %}
                                     <tr>
                                         <td>
-                                            {{stat.lab}}
+                                            <a href='{% url 'labs_page' id=stat.lab.id %}?next={{request.get_full_path|urlencode}}';" id="{{stat.lab.pk}}" class="lab">
+                                                {{stat.lab}}
+                                            </a>
                                         </td>
                                         <td>
                                             {{stat.status}}

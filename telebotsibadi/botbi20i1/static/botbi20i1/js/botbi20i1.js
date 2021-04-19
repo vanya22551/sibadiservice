@@ -1,8 +1,34 @@
 /* Открытие меню */
-if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)){
-    
-}else{
-    var menu = document.getElementsByClassName('menu');
+var menu = document.getElementsByClassName('menu');
+var button = document.getElementsByClassName('btn_menu');
+var icon = document.getElementById('btn_menu');
+button[0].onclick = function () {
+
+    if (icon.className == 'fas fa-arrow-circle-right') {
+        menu[0].animate({
+            left: '0px'
+        
+        }, 300);
+        button[0].animate({
+            left: '285px'
+        
+        }, 300);
+        menu[0].style.left = '0px';
+        icon.className = 'fas fa-arrow-circle-left';
+        button[0].style.left = '285px';
+    }else if (icon.className == 'fas fa-arrow-circle-left') {
+        menu[0].animate({
+            left: '-285px'
+        }, 300);
+        button[0].animate({
+            left: '0px'
+        
+        }, 300);
+        menu[0].style.left = '-285px';
+        button[0].style.left = '0px';
+        icon.className = 'fas fa-arrow-circle-right';
+    }
+}
 
 
 document.onmousemove = function(event) {
@@ -13,7 +39,13 @@ document.onmousemove = function(event) {
             left: '0px'
         
         }, 300);
+        button[0].animate({
+            left: '285px'
+        
+        }, 300);
+        button[0].style.left = '285px';
         menu[0].style.left = '0px';
+        icon.className = 'fas fa-arrow-circle-left';
 
 
 
@@ -21,14 +53,21 @@ document.onmousemove = function(event) {
         menu[0].animate({
             left: '-285px'
         }, 300);
+        button[0].animate({
+            left: '0px'
+        
+        }, 300);
+        button[0].style.left = '0px';
         menu[0].style.left = '-285px';
+        icon.className = 'fas fa-arrow-circle-right';
     }    
     
 
 
 }
 
-    }
+
+
 
 
 //<i class="far fa-arrow-alt-circle-right"></i>

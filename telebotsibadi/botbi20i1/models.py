@@ -48,12 +48,15 @@ class Group(models.Model):
     Лаборантоные работы
 """
 class Laboratory(models.Model):
-    description = models.TextField(default="",
-                                     verbose_name="Описание")
+
     name = models.CharField(max_length=200,
                             default="", verbose_name="Название")
+    description = models.TextField(default="",
+                                     verbose_name="Описание")
     kt = models.PositiveIntegerField(default=1,
                                      verbose_name="КТ")
+
+    comment = models.TextField(default="", blank=True, verbose_name="Комментарий преподователя")
 
     group_id = models.ForeignKey(Group,
                                 on_delete=models.CASCADE,
@@ -103,9 +106,16 @@ class Student(models.Model):
                                                MaxValueValidator(100.00)])
     rating = models.FloatField(default=0,
                                validators=[MinValueValidator(0),
-                                           MaxValueValidator(100.00)])
+                                           MaxValueValidator(100.00)], )
     labs = models.ManyToManyField(Laboratory,
                                   through='Stats')
+
+    def save(self, *args, **kwargs):
+        self.rating = round(self.rating, 2)
+        self.rating_1KT = round(self.rating_1KT, 2)
+        self.rating_2KT = round(self.rating_2KT, 2)
+        self.rating_3KT = round(self.rating_3KT, 2)
+        super(Student, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.second_name + " " + self.name + " " + self.patronymic

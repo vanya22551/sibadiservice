@@ -74,6 +74,7 @@ div.block1{
     background: #d5e1f2;
     padding: 10px;
     float: left;
+    
 
 }
 
@@ -95,6 +96,7 @@ div.personal_data {
     background-color: rgb(218, 216, 216);
     border-radius: 15px;
     width: 96%;
+    min-width: 96%;
     height: 100%;
     overflow: auto;
     float: right;
@@ -266,6 +268,15 @@ div.additional_information {
     font-size: 25;
 }
 
+div.statement {
+    float: left;
+    width: auto;
+    height: auto;
+    padding-left: 20px;
+    padding-top: 15px;
+    font-size: 25;
+}
+
 div.student {
     float: left;
     min-width: 79%;
@@ -374,6 +385,10 @@ a.git_hub {
     color: #273027;    
 }
 
+a.statement {
+    color: #273027;    
+}
+
 a.lab {
     text-decoration: none;
     color: #273027; 
@@ -418,6 +433,19 @@ table.std_page {
     margin: auto;
 }
 
+td.teacher_comment {
+    border: #fff;
+    text-align: center;
+}
+
+button.comment {
+    outline: none;
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: #fff;
+
+}
+
 form.login p.username {padding-top: 5px;}
 
 form.login p.login {
@@ -439,6 +467,7 @@ h1.lab_create{
 }
 
 p.name {
+    font-size: 18;
     text-align: center;
 }
 
@@ -448,6 +477,7 @@ p.lab_name {
 }
 
 p.description {
+    font-size: 18;
     text-align: center;
 }
 
@@ -456,7 +486,9 @@ p.lab_description{
     text-align:  center;
 }
 
-p.kt {
+p.kt_name {
+    font-size: 18;
+
     text-align: center;
 }
 
@@ -466,16 +498,23 @@ p.lab_kt {
 }
 
 p.weight {
+    font-size: 18;
     text-align: center;
 }
 
 p.weight_lab {
+    font-size: 18;
     margin-top: -12px;
     text-align:  center;
 }
 
+p.weightKt {
+    font-size: 12;
+    text-align: center;
+}
+
 p.lab_group {
-    margin-top: -12px;
+    margin-top: -5px;
     text-align:  center;
 }
 
@@ -523,6 +562,7 @@ body {
   /* Menu */
   
   .menu {
+    z-index: 100;
     background: #555  repeat left top;
     left: -285px; /* прячем меню */
     height: 100%;
@@ -597,4 +637,23 @@ body {
     max-width: 2%;
     position: fixed;
 
+  }
+
+  div.open_menu {
+      z-index: 100;
+      padding-right: 10px;
+      position: fixed;
+      float: left;
+      
+  }
+
+  button.btn_menu {
+    border-radius: 40%;
+    outline: none;
+    position: fixed;
+    float: left;
+    font-size: 25;
+    border: #fff;
+    background-color: Transparent;
+    background-repeat:no-repeat;   
   }

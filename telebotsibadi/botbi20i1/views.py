@@ -25,14 +25,35 @@ def view_info(request):
     Функция добавление лабы
 """
 def lab_add_view(request):
+
+    weightKt1 = 100
+    weightKt2 = 100
+    weightKt3 = 100
+    labsKt1 = Laboratory.objects.filter(kt=1)
+    labsKt2 = Laboratory.objects.filter(kt=2)
+    labsKt3 = Laboratory.objects.filter(kt=3)
+
+    for labKt1 in labsKt1:
+        weightKt1 -= labKt1.weight
+
+    for labKt2 in labsKt2:
+        weightKt2 -= labKt2.weight
+
+    for labKt3 in labsKt3:
+        weightKt3 -= labKt3.weight
+
+
+        
     if request.method == 'POST':
         
         form = LabForm(request.POST)
         if form.is_valid():
 
             form.save()
+            
             students = Student.objects.filter(group_id=request.POST['group_id'])
             lab = Laboratory.objects.filter(name=request.POST['name'])
+
             
             for student in students:
                 
@@ -48,7 +69,10 @@ def lab_add_view(request):
         form = LabForm()
     
     context = {
-        'form': form
+        'form': form,
+        'weightKt1': weightKt1,
+        'weightKt2': weightKt2,
+        'weightKt3': weightKt3
     }
     return render(request, template_name='botbi20i1/labCreate_page.html', context=context)
 
@@ -205,7 +229,8 @@ def user(request):
     Страница группы
 """
 def group(request, group_id):
-    students = Student.objects.filter(group_id__id=group_id)
+    students = Student.objects.filter(group_id__id=group_id).order_by('second_name')
+    print(students)
     stats = Stats.objects.all().order_by('lab')
     teachers = Teacher.objects.all()
     KT_1 = EducationControl.objects.filter(group__id=group_id ,number=1)
@@ -346,7 +371,6 @@ def update_changes(request):
         labs_kt3 = user.labs.filter(kt=3)
         KT_number = stats.lab.kt
         kt = EducationControl.objects.filter(number=KT_number)
-        print(kt[0].weight)
         if request.GET['status'] == '1':
 
             if user.rating_1KT <= 100 and user.rating_2KT <= 100 and user.rating_3KT <= 100:
@@ -370,31 +394,39 @@ def update_changes(request):
                 elif KT_number == 2:
                     for lab_kt2 in labs_kt2:
                         if lab_kt2 == stats.lab:
+                            ratingPoint = (lab_kt2.weight / 100) * kt[0].weight
                             if stats.status == True:
                                 stats.status = False
                                 stats.save()
                                 if user.rating_2KT > 0:
                                     user.rating_2KT -= lab_kt2.weight
+                                    user.rating -= ratingPoint
                             else:
                                 stats.status = True
                                 stats.save()
                                 if user.rating_2KT >= 0:
                                     user.rating_2KT += lab_kt2.weight
+                                    user.rating += ratingPoint
                 else:
                     for lab_kt3 in labs_kt3:
                         if lab_kt3 == stats.lab:
+                            ratingPoint = (lab_kt3.weight / 100) * kt[0].weight
                             if stats.status == True:
                                 stats.status = False
                                 stats.save()
                                 if user.rating_3KT > 0:
                                     user.rating_3KT -= lab_kt3.weight
+                                    user.rating -= ratingPoint
                             else:
                                 stats.status = True
                                 stats.save()
                                 if user.rating_3KT >= 0:
                                     user.rating_3KT += lab_kt3.weight
+                                    user.rating += ratingPoint
             if user.rating < 0:
                 user.rating = 0
+            
+            
  
 
 
@@ -416,36 +448,3 @@ def update_changes(request):
 
 
 
-                    #N = int(request.POST['kt'])
-                    #labs_ktN = student.labs.filter(kt=N)
-                    #s = Stats.objects.filter(student=student,status=True)
-                #
-                    #sum_true_lab_kt1 = 0
-                    #sum_true_lab_kt2 = 0
-                    #sum_true_lab_kt3 = 0
-                    #
-                    #for st in s:
-                    #    if st.lab.kt == 1:
-                    #        sum_true_lab_kt1 += 1
-#
-                    #    elif st.lab.kt == 2:
-                    #        sum_true_lab_kt2 += 1
-                    #    else:
-                    #        sum_true_lab_kt3 += 1
-                    #print(sum_true_lab_kt1)    
-#
-                    #if N == 1:
-                    #    student.rating_1KT = 0
-                    #    point_kt1 = round(100 / len(labs_ktN), 1)
-                    #    student.rating_1KT = point_kt1 * sum_true_lab_kt1
-                    #    
-                    #elif N == 2:
-                    #    student.rating_2KT = 0
-                    #    point_kt2 = round(100 / len(labs_ktN), 1)
-                    #    student.rating_2KT = point_kt2 * sum_true_lab_kt2
-                    #else:
-                    #    student.rating_3KT = 0
-                    #    point_kt3 = round(100 / len(labs_ktN), 1)    
-                    #    student.rating_3KT = point_kt3 * sum_true_lab_kt3
-                    #
-                    #print(student.name + " " + str(student.rating_1KT))
