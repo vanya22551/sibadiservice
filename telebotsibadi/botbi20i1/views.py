@@ -1,162 +1,156 @@
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.http import JsonResponse, HttpResponse
 from django.contrib.auth.models import User
+
+
 from .models import Student, Hint, Stats, Group, Laboratory, File, Teacher, EducationControl
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import ListView
 from .forms import LabForm, AuthUserForm, RegisterUserForm, ChangePasswordForm, FileForm, EditTeacherInformationForm
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth import update_session_auth_hash
+'''
+import sys
+import os
+import subprocess
+import shutil
+import pathlib
+from pathlib import Path
+import os.path
+import argparse
+'''
 
+'''
 
-def view_info(request):
-    student = Student.objects.filter(user=request.user)
-    files = File.objects.filter(student=student[0])
-    print(files[0].student)
-    url = "/media/GroupProject.py"
-    context = {
-        'url': url,
-        'files': files
-    }
-    return render(request, template_name='botbi20i1/info.html', context=context)
+def open_code(request, res_file, check_file, student_name, lab_numb, lab_exp):
+    """
+    res_file - ссылка на дерикторию, где лежат входные и выходные данные проверки
+    check_file - ссылка на личную аудиторию студента
+    student_name - имя студента
+    lub_num - номер лыбы
+    lab_exp - расширение файла
+    """
 
-"""
-    Функция добавление лабы
-"""
-def lab_add_view(request):
+    #parser = argparse.ArgumentParser(description='enter the key directories')
+    #parser.add_argument('res', type=str, help='enter the directory with the files to res')
+    #parser.add_argument('files_student', type=str, help='enter the directory with the students file')
+    #parser.add_argument('last_name', type=str, help='enter the students last name')
+    #parser.add_argument('lab_number', type=str, help='enter the lab number')
+    #parser.add_argument('lab_expansion', type=str, help='enter the extension')
+    #args = parser.parse_args()
 
-    weightKt1 = 100
-    weightKt2 = 100
-    weightKt3 = 100
-    labsKt1 = Laboratory.objects.filter(kt=1)
-    labsKt2 = Laboratory.objects.filter(kt=2)
-    labsKt3 = Laboratory.objects.filter(kt=3)
+    #a = settings.BASE_DIR
+    main = settings.BASE_DIR
 
-    for labKt1 in labsKt1:
-        weightKt1 -= labKt1.weight
+    resFile = os.path.join(res_file)
 
-    for labKt2 in labsKt2:
-        weightKt2 -= labKt2.weight
+    checkFile = os.path.join(check_file)
 
-    for labKt3 in labsKt3:
-        weightKt3 -= labKt3.weight
+    studentName = os.path.join(student_name)
 
+    labNum = os.path.join(lab_numb)
 
-        
-    if request.method == 'POST':
-        
-        form = LabForm(request.POST)
-        if form.is_valid():
+    labExp = os.path.join(lab_exp)
 
-            form.save()
-            
-            students = Student.objects.filter(group_id=request.POST['group_id'])
-            lab = Laboratory.objects.filter(name=request.POST['name'])
+    #name_files = (args.last_name + '_' + args.lab_number + args.lab_expansion)
 
-            
-            for student in students:
-                
-                if not Stats.objects.filter(lab=lab[0], student=student):
-    
-                    stats = Stats(student=student,
-                                  lab=lab[0],
-                                  status=False)
-                    stats.save()
-            return redirect(request.GET['next'])
-        
-    else:
-        form = LabForm()
-    
-    context = {
-        'form': form,
-        'weightKt1': weightKt1,
-        'weightKt2': weightKt2,
-        'weightKt3': weightKt3
-    }
-    return render(request, template_name='botbi20i1/labCreate_page.html', context=context)
+    #files_student = os.path.join(args.files_student, name_files)
 
+    files_copy1 = os.path.join(checkFile,'input.in.txt')
 
-def lab_pk(pk):
-    #/lab/52/?next=/group/10/
-    lab_pk = ''
-    change_pk = pk[5:-7]
-    for i in change_pk:
-        if i.isdigit():
-            lab_pk += i
-    return lab_pk
+    files_copy2 = os.path.join(checkFile,'input.secret.txt')
 
+    files_insert = os.path.join(main,'input.txt')
 
-"""
-    Функция добавления файла с заданием студента
-"""
-def FileAddView(request):
-    if request.method == 'POST':
-
-        form = FileForm(request.POST, request.FILES)
-        if form.is_valid():
-            pk = request.GET['next']
-            print(request.GET)
-            print(type(pk[5]))
-            lab_id = lab_pk(request.GET['next'])
-            print(lab_id)
-            student = Student.objects.filter(user=request.user)
-            lab = Laboratory.objects.filter(pk=lab_id)
-            file = form.save(commit=False)
-            file.lab = lab[0]
-            file.student = student[0]
-            file.save()
-
-
-
-            print(lab[0])
-            return redirect(request.GET['next'])
-    else:
-        form = FileForm()
-
-    context = {
-        'form': form
-    }
-    return render(request, template_name='botbi20i1/add_file.html', context=context)
+#
+#
+#    def Checking_Hashes1(check,main):
+#        f = open(os.path.join(res_file, 'output.out.txt'), "r")
+#        f2 = open(os.path.join(main, 'output.txt'), "r")
+#        global percent
+#        percent=0
+#        while True:
+#            answer_teacher1=hash(f.readline())
+#            answer_student1=hash(f2.readline())
+#    if answer_teacher1==answer_student1:
+#        percent=percent+10
+#    if not answer_student1:
+#        break
+#    f.close()
+#    f2.close()
+#
+#    def Checking_Hashes2(check,main):
+#        f = open(os.path.join(res_file, 'output.secret.txt'), "r")
+#        f2 = open(os.path.join(main, 'output.txt'), "r")
+#    global percent2
+#    percent2=0
+#    while True:
+#        answer_teacher1=hash(f.readline())
+#        answer_student1=hash(f2.readline())
+#    if answer_teacher1==answer_student1:
+#        percent2=percent2+10
+#    if not answer_student1:
+#        break
+#    f.close()
+#    f2.close()
+#
+#
+#    shutil.copyfile(files_copy1,files_insert)
+#    print ('..................copy file true.................')
+#    subprocess.call([sys.executable,checkFile])
+#    print ('.........................Launch file true.........................')
+#    Checking_Hashes1(check,main)
+#    print ('......................Checking files hashes 1 true................')
+#    shutil.copyfile(files_copy2,files_insert)
+#    print ('....................Copy file true..................')
+#    launchFile(files_student)
+#    print ('........................Launch file true..........................')
+#    Checking_Hashes2(check,main)
+#    print ('.........................Checking files hashes 2 true...............')
+#    print ('.........................',percent+percent2,'...............')
+#    os.remove(os.path.join(main,'input.txt'))
+#    os.remove(os.path.join(main,'output.txt'))
+#
+#
+'''
 
 
 """
-    Функция изменения файла студентом
+    Функция вывода главной страницы
 """
-def FileChangeView(request):
-    if request.method == 'POST':
 
-        form = FileForm(request.POST, request.FILES)
-        if form.is_valid():
-            lab_id = lab_pk(request.GET['next'])
-            student = Student.objects.filter(user=request.user)
-            lab = Laboratory.objects.filter(pk=lab_id)
-            File.objects.get(student=student[0], lab=lab[0]).delete()
-            file = form.save(commit=False)
-            file.lab = lab[0]
-            file.student = student[0]
-            file.save()
+class facePage(ListView):
 
-            return redirect(request.GET['next'])
-    else:
-        form = FileForm()
+    model = Student
+    template_name='botbi20i1/face_page.html'
+    context_object_name = 'students'
 
-    context = {
-        'form': form
-    }
-    return render(request, template_name='botbi20i1/change_file.html', context=context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['groups'] = Group.objects.all()
+        context['teachers'] = Teacher.objects.all()
+        context['stats'] = Stats.objects.all().order_by('lab')
+        return context
 
 
 """
-    Функция удаления файла студентом
+    Страница пользователя 
 """
 
-def FileDeleteView(request):
-    lab_id = lab_pk(request.GET['next'])
-    student = Student.objects.filter(user=request.user)
-    lab = Laboratory.objects.filter(pk=lab_id)
-    File.objects.get(student=student[0], lab=lab[0]).delete()
-    return redirect(request.GET['next'])
+class userPage(ListView):
+
+    model = Student
+    template_name='botbi20i1/user_page.html'
+    context_object_name = 'students'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['groups'] = Group.objects.all()
+        context['teachers'] = Teacher.objects.all()
+        context['stats'] = Stats.objects.all()
+        return context
 
 
 
@@ -184,6 +178,7 @@ class RegisterUserView(CreateView):
         return self.success_url
 
 
+
 def ChangePasswordView(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -201,28 +196,6 @@ def ChangePasswordView(request):
         return render(request, template_name='botbi20i1/changepassword_page.html', context=context)
     else:
         return redirect('face_page')
-            
-
-
-
-
-"""
-    Страница пользователя 
-"""
-def user(request):
-
-    students = Student.objects.all()
-    stats = Stats.objects.all()
-    teachers = Teacher.objects.all()
-    groups = Group.objects.all()
-    
-    context = {
-        'stats': stats,
-        'students': students,
-        'teachers': teachers, 
-        'groups': groups
-    }
-    return render(request, template_name='botbi20i1/user_page.html', context=context)
 
 
 """
@@ -313,23 +286,6 @@ def studentPage(request, id):
 
     return render(request, template_name='botbi20i1/student_page.html', context=context)
 
-"""
-    Функция вывода главной страницы
-"""
-def facePage(request):
-    students = Student.objects.all()
-    groups = Group.objects.all()
-    teachers = Teacher.objects.all()
-    stats = Stats.objects.all().order_by('lab')
-
-    context = {
-        'groups': groups,
-        'students': students,
-        'teachers': teachers,
-        'stats': stats,
-    }
-
-    return render(request, template_name='botbi20i1/face_page.html', context=context)
 
 
 def index(request, index_id):
@@ -444,6 +400,158 @@ def update_changes(request):
             'kt_3': float('{:.2f}'.format(user.rating_3KT)),
             'rating': float('{:.2f}'.format(user.rating))
         })
+
+def view_info(request):
+    student = Student.objects.filter(user=request.user)
+    files = File.objects.filter(student=student[0])
+    print(files[0].student)
+    url = "/media/GroupProject.py"
+    context = {
+        'url': url,
+        'files': files
+    }
+    return render(request, template_name='botbi20i1/info.html', context=context)
+
+"""
+    Функция добавление лабы
+"""
+def lab_add_view(request):
+
+    weightKt1 = 100
+    weightKt2 = 100
+    weightKt3 = 100
+    labsKt1 = Laboratory.objects.filter(kt=1)
+    labsKt2 = Laboratory.objects.filter(kt=2)
+    labsKt3 = Laboratory.objects.filter(kt=3)
+
+    for labKt1 in labsKt1:
+        weightKt1 -= labKt1.weight
+
+    for labKt2 in labsKt2:
+        weightKt2 -= labKt2.weight
+
+    for labKt3 in labsKt3:
+        weightKt3 -= labKt3.weight
+
+
+    if request.method == 'POST':
+
+        form = LabForm(request.POST)
+        if form.is_valid():
+
+            form.save()
+
+            students = Student.objects.filter(group_id=request.POST['group_id'])
+            lab = Laboratory.objects.filter(name=request.POST['name'])
+
+
+            for student in students:
+
+                if not Stats.objects.filter(lab=lab[0], student=student):
+
+                    stats = Stats(student=student,
+                                  lab=lab[0],
+                                  status=False)
+                    stats.save()
+            return redirect(request.GET['next'])
+
+    else:
+        form = LabForm()
+
+    context = {
+        'form': form,
+        'weightKt1': weightKt1,
+        'weightKt2': weightKt2,
+        'weightKt3': weightKt3
+    }
+    return render(request, template_name='botbi20i1/labCreate_page.html', context=context)
+
+
+
+def lab_pk(pk):
+    #/lab/52/?next=/group/10/
+    lab_pk = ''
+    change_pk = pk[5:-7]
+    for i in change_pk:
+        if i.isdigit():
+            lab_pk += i
+    return lab_pk
+
+
+
+
+"""
+    Функция добавления файла с заданием студента
+"""
+def FileAddView(request):
+    if request.method == 'POST':
+
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            pk = request.GET['next']
+            print(request.GET)
+            print(type(pk[5]))
+            lab_id = lab_pk(request.GET['next'])
+            print(lab_id)
+            student = Student.objects.filter(user=request.user)
+            lab = Laboratory.objects.filter(pk=lab_id)
+            file = form.save(commit=False)
+            file.lab = lab[0]
+            file.student = student[0]
+
+            file.save()
+
+
+
+            print(lab[0])
+            return redirect(request.GET['next'])
+    else:
+        form = FileForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, template_name='botbi20i1/add_file.html', context=context)
+
+
+"""
+    Функция изменения файла студентом
+"""
+def FileChangeView(request):
+    if request.method == 'POST':
+
+        form = FileForm(request.POST, request.FILES)
+        if form.is_valid():
+            lab_id = lab_pk(request.GET['next'])
+            student = Student.objects.filter(user=request.user)
+            lab = Laboratory.objects.filter(pk=lab_id)
+            File.objects.get(student=student[0], lab=lab[0]).delete()
+            file = form.save(commit=False)
+            file.lab = lab[0]
+            file.student = student[0]
+            file.save()
+
+            return redirect(request.GET['next'])
+    else:
+        form = FileForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, template_name='botbi20i1/change_file.html', context=context)
+
+
+"""
+    Функция удаления файла студентом
+"""
+
+def FileDeleteView(request):
+    lab_id = lab_pk(request.GET['next'])
+    student = Student.objects.filter(user=request.user)
+    lab = Laboratory.objects.filter(pk=lab_id)
+    File.objects.get(student=student[0], lab=lab[0]).delete()
+    return redirect(request.GET['next'])
+
 
 
 

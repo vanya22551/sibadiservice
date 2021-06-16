@@ -5,6 +5,18 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+def folder_path(instance, filename):
+    return "{0}/{1}".format(instance.personal_number, filename)
+
+def folder_path_students_file(instance, filename):
+    return "{0}/{1}".format(instance.student.personal_number, filename)
+
+def folder_path_fileIn(instance, filename):
+    return "Laboratory/{0}/input/{1}".format(instance.name, filename)
+
+def folder_path_fileOut(instance, filename):
+    return "Laboratory/{0}/output/{1}".format(instance.name, filename)
+
 """
     Преподователь, информация о нем
 """
@@ -68,9 +80,13 @@ class Laboratory(models.Model):
                                                MaxValueValidator(100.00)],
                                 blank=True,
                                 verbose_name="Вес лабы (%)")
+    file_input = models.FileField(upload_to= folder_path_fileIn, default= None, blank=True)
+
+    file_output = models.FileField(upload_to= folder_path_fileOut, default= None, blank=True)
 
     def __str__(self):
         return self.name
+
 
 
 """
@@ -110,6 +126,8 @@ class Student(models.Model):
     labs = models.ManyToManyField(Laboratory,
                                   through='Stats')
 
+    student_dir = models.FileField(upload_to= folder_path, default=None, blank=True)
+
     def save(self, *args, **kwargs):
         self.rating = round(self.rating, 2)
         self.rating_1KT = round(self.rating_1KT, 2)
@@ -125,7 +143,7 @@ class Student(models.Model):
     Файлы, которые студент отправляет на проверку
 """
 class File(models.Model):
-    file = models.FileField()
+    file = models.FileField(upload_to= folder_path_students_file, default=None)
 
     lab = models.ForeignKey(Laboratory, blank=True,
                             on_delete=models.CASCADE)
